@@ -35,3 +35,6 @@ lerna-debug.log*
 
 # SQlite-db
 *.sqlite3
+
+# Environment files
+.env

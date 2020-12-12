@@ -1,15 +1,17 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule } from '@nestjs/config';
 
 import { PostsModule } from './posts/posts.module';
-import * as ormconfig from './ormconfig';
+import { DatabaseModule } from './common/database/database.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      ...ormconfig,
-      autoLoadEntities: true
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: ['.env.local', '.env'],
+      expandVariables: true
     }),
+   DatabaseModule,
     PostsModule
   ],
   controllers: [],
