@@ -2,7 +2,6 @@
 import { ConnectionOptions } from 'typeorm';
 import { config as loadEnv } from 'dotenv';
 import { join } from 'path';
-import * as util from 'util';
 
 loadEnv();
 
@@ -44,7 +43,5 @@ const config: Partial<ConnectionOptions> = {
   ...eachEnvConfig[process.env.NODE_ENV || 'development'],
   ...commonConfig
 }
-
-console.log(util.inspect(config, false, null, true));
 
 export = config;
