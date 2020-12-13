@@ -1,6 +1,12 @@
 
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, BeforeInsert, Index } from 'typeorm';
-const urlSlug = require('url-slug');
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  Index
+} from 'typeorm';
 
 @Entity()
 export class Post {
@@ -23,19 +29,5 @@ export class Post {
 
   @UpdateDateColumn()
   updatedAt?: Date;
-
-  @BeforeInsert()
-  beforeInserActions() {
-    this.addSlug();
-  }
-
-  public getSlug() {
-    return urlSlug(this.title);
-  }
-
-  private addSlug() {
-    if (!this.slug)
-      this.slug = this.getSlug();
-  }
 
 }

@@ -1,10 +1,9 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Connection, Repository } from 'typeorm';
-import { CreatePostDto } from '../dtos/create-post.dto';
 
-import { Post } from '../entities/post.entity';
-import { PostRepository } from '../repositories/post.repository';
+import { Injectable } from '@nestjs/common';
+
+import { CreatePostDto } from '@Posts/dtos/create-post.dto';
+import { Post } from '@Posts/entities/post.entity';
+import { PostRepository } from '@Posts/repositories/post.repository';
 
 @Injectable()
 export class PostsService {

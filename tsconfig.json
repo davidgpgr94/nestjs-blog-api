@@ -10,6 +10,12 @@
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
-    "incremental": true
-  }
+    "incremental": true,
+    "paths": {
+      "@AppRoot/*": ["src/*"],
+      "@Common/*": ["src/common/*"],
+      "@Posts/*": ["src/posts/*"]
+    }
+  },
+  "exclude": ["node_modules"]
 }
