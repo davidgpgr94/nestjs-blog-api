@@ -13,9 +13,9 @@ export class PostsController {
     return await this.postsService.findAll();
   }
 
-  @Get(':id')
-  async findOne(@Param('id') id: string) {
-    return this.postsService.findById(id);
+  @Get(':slug')
+  async findOne(@Param('slug') slug: string) {
+    return this.postsService.findBySlug(slug);
   }
 
   @Post()

@@ -20,9 +20,8 @@ export class PostsService {
     return await this.postsRepository.findAll();
   }
 
-  async findById(id: string) {
-    // return this.postsRepository.findOne(id);
-    return this.postsRepository.findOne(id);
+  async findBySlug(slug: string): Promise<Post> {
+    return await this.postsRepository.findBySlug(slug);
   }
 
   async create(createPostDto: CreatePostDto) {

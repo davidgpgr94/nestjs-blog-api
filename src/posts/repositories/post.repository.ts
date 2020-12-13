@@ -11,6 +11,10 @@ export class PostRepository extends AbstractRepository<Post> {
     return result;
   }
 
+  async findBySlug(slug: string) {
+    return await this.repository.findOne({ slug: slug });
+  }
+
   async findAll() {
     return await this.repository.find();
   }
