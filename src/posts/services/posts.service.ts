@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Connection, Repository } from 'typeorm';
+import { CreatePostDto } from '../dtos/create-post.dto';
 
 import { Post } from '../entities/post.entity';
 import { PostRepository } from '../repositories/post.repository';
@@ -22,7 +23,11 @@ export class PostsService {
 
   async findById(id: string) {
     // return this.postsRepository.findOne(id);
-    return this.postsRepository.myFindOne(id);
+    return this.postsRepository.findOne(id);
+  }
+
+  async create(createPostDto: CreatePostDto) {
+    return this.postsRepository.createPost(createPostDto);
   }
 
   // async createMany(posts: Post[]) {
