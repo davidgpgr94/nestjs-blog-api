@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, NotFoundException, Param, Post } from '@nestjs/common';
 
 import { CreatePostDto } from '@Posts/dtos/create-post.dto';
 import { PostsService } from '@Posts/services/posts.service';
@@ -15,7 +15,12 @@ export class PostsController {
 
   @Get(':slug')
   async findOne(@Param('slug') slug: string) {
-    return this.postsService.findBySlug(slug);
+    const post = await this.postsService.findBySlug(slug);
+    if (!post) {
+      throw new NotFoundException();
+    } else {
+      return this.postsService.findBySlug(slug);
+    }
   }
 
   @Post()
