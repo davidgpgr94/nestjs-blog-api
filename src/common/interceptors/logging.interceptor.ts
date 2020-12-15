@@ -5,20 +5,28 @@ import { Request } from 'express';
 
 @Injectable()
 export class LoggingInterceptor implements NestInterceptor {
+
+  private readonly logger: Logger;
+
+  constructor() {
+    this.logger = new Logger();
+  }
+
   intercept(ctx: ExecutionContext, next: CallHandler): Observable<any> {
     const now = Date.now();
     if (ctx.getType() === 'http') {
+      this.logger.setContext(ctx.getClass().name);
       const req = ctx.switchToHttp().getRequest<Request>();
       const method = req.method;
       const url = req.url;
 
       return next.handle().pipe(
         tap(() => {
-          Logger.log(`${method} ${url}`, ctx.getClass().name);
+          this.logger.log(`${method} ${url}`);
         }),
         catchError(err => {
           if (err instanceof HttpException) {
-            Logger.log(`(${err.getStatus()}) ${method} ${url}`, ctx.getClass().name);
+            this.logger.log(`(${err.getStatus()}) ${method} ${url}`);
           }
           return next.handle();
         })
