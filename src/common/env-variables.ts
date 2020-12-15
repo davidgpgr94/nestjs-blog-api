@@ -9,4 +9,8 @@ export enum Env {
   DATABASE_PASSWORD = 'DATABASE_PASSWORD',
 }
 
-
+export enum NodeEnvValues {
+  prod = 'production',
+  dev = 'development',
+  test = 'test'
+}
