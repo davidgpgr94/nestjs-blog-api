@@ -1,6 +1,6 @@
-import { Module } from '@nestjs/common';
+import { Module, ValidationPipe } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
+import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 
 import { PostsModule } from '@Posts/posts.module';
 import { DatabaseModule } from '@Common/database/database.module';
@@ -20,6 +20,14 @@ import { AllExceptionsFilter } from '@Common/filters/all-exceptions.filter';
   ],
   controllers: [],
   providers: [
+    {
+      provide: APP_PIPE,
+      useValue: new ValidationPipe({
+        whitelist: true,
+        transform: true,
+        forbidUnknownValues: true
+      })
+    },
     {
       provide: APP_INTERCEPTOR,
       useClass: TransformResponseInterceptor

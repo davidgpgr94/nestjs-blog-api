@@ -1,4 +1,4 @@
-import { Body, Controller, Get, NotFoundException, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Logger, NotFoundException, Param, Post } from '@nestjs/common';
 
 import { CreatePostDto } from '@Posts/dtos/create-post.dto';
 import { PostsService } from '@Posts/services/posts.service';
@@ -6,7 +6,11 @@ import { PostsService } from '@Posts/services/posts.service';
 @Controller('posts')
 export class PostsController {
 
-  constructor(private postsService: PostsService) {}
+  private readonly logger: Logger;
+
+  constructor(private postsService: PostsService) {
+    this.logger = new Logger(PostsController.name);
+  }
 
   @Get()
   async findAll() {
