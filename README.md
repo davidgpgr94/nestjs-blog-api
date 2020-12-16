@@ -2,7 +2,7 @@
 ---
 ## ToDo
 
-- [ ] Hacer las validaciones y usar los pipes para las validaciones.
+- [x] Hacer las validaciones y usar los pipes para las validaciones.
 - [ ] Terminar de hacer el controller de los posts
 - [ ] Hacer la parte de los usuarios (login, jwt, roles...)
 - [ ] Añadir Guard para que solo un usuario autenticado (con jwt) pueda crear un post.
