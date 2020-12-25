@@ -1,7 +1,11 @@
-import { Body, Controller, Get, Logger, NotFoundException, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Logger, NotFoundException, Param, Patch, Post, Put } from '@nestjs/common';
 
 import { CreatePostDto } from '@Posts/dtos/create-post.dto';
+import { UpdatePostDto } from '@Posts/dtos/update-post.dto';
 import { PostsService } from '@Posts/services/posts.service';
+import { Post as PostEntity } from '@Posts/entities/post.entity';
+import { PostEntity as PostEntityDecorator } from '@Posts/decorators/post-entity.decorator';
+
 
 @Controller('posts')
 export class PostsController {
@@ -30,6 +34,11 @@ export class PostsController {
   @Post()
   async create(@Body() createPostDto: CreatePostDto) {
     return {slug: await this.postsService.create(createPostDto)};
+  }
+
+  @Put(':slug')
+  async update(@Body() updatePostDto: UpdatePostDto, @PostEntityDecorator() postToUpdate: PostEntity) {
+    return await this.postsService.update(postToUpdate, updatePostDto);
   }
 
 }

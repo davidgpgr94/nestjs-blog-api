@@ -4,6 +4,7 @@ import { Injectable } from '@nestjs/common';
 import { CreatePostDto } from '@Posts/dtos/create-post.dto';
 import { Post } from '@Posts/entities/post.entity';
 import { PostRepository } from '@Posts/repositories/post.repository';
+import { UpdatePostDto } from '../dtos/update-post.dto';
 
 @Injectable()
 export class PostsService {
@@ -26,6 +27,10 @@ export class PostsService {
 
   async create(createPostDto: CreatePostDto) {
     return this.postsRepository.createPost(createPostDto);
+  }
+
+  async update(postToUpdate: Post, updatePostDto: UpdatePostDto) {
+    return this.postsRepository.updatePost(postToUpdate, updatePostDto);
   }
 
   // async createMany(posts: Post[]) {

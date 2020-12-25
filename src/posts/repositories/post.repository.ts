@@ -2,6 +2,7 @@ import { EntityRepository, AbstractRepository } from "typeorm";
 
 import { CreatePostDto } from "@Posts/dtos/create-post.dto";
 import { Post } from '@Posts/entities/post.entity';
+import { UpdatePostDto } from "../dtos/update-post.dto";
 
 @EntityRepository(Post)
 export class PostRepository extends AbstractRepository<Post> {
@@ -23,6 +24,11 @@ export class PostRepository extends AbstractRepository<Post> {
     const post = this.repository.create(createPostDto);
     const postCreated = await this.repository.save(post);
     return postCreated.slug;
+  }
+
+  async updatePost(postToUpdate: Post, updatePostDto: UpdatePostDto) {
+    await this.repository.update(postToUpdate.id, updatePostDto);
+    return await this.repository.findOne(postToUpdate.id);
   }
 
   async countPostsWithSimilarSlug(slug: string): Promise<number> {
