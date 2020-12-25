@@ -7,6 +7,8 @@ import { DatabaseModule } from '@Common/database/database.module';
 import { LoggingInterceptor } from '@Common/interceptors/logging.interceptor';
 import { TransformResponseInterceptor } from '@Common/interceptors/transform-response.interceptor';
 import { AllExceptionsFilter } from '@Common/filters/all-exceptions.filter';
+import { AuthModule } from '@Auth/auth.module';
+import { UsersModule } from '@Users/users.module';
 
 @Module({
   imports: [
@@ -16,7 +18,9 @@ import { AllExceptionsFilter } from '@Common/filters/all-exceptions.filter';
       expandVariables: true
     }),
     DatabaseModule,
-    PostsModule
+    PostsModule,
+    AuthModule,
+    UsersModule
   ],
   controllers: [],
   providers: [

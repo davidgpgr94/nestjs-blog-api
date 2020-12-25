@@ -14,7 +14,9 @@
     "paths": {
       "@AppRoot/*": ["src/*"],
       "@Common/*": ["src/common/*"],
-      "@Posts/*": ["src/posts/*"]
+      "@Posts/*": ["src/posts/*"],
+      "@Auth/*": ["src/auth/*"],
+      "@Users/*": ["src/users/*"]
     }
   },
   "exclude": ["node_modules", "dist"]
