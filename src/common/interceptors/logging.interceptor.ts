@@ -1,5 +1,5 @@
 import { CallHandler, ExecutionContext, Injectable, NestInterceptor, Logger, HttpException } from '@nestjs/common';
-import { Observable, of } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { Request } from 'express';
 
@@ -28,7 +28,7 @@ export class LoggingInterceptor implements NestInterceptor {
           if (err instanceof HttpException) {
             this.logger.log(`(${err.getStatus()}) ${method} ${url}`);
           }
-          return next.handle();
+          return throwError(err);
         })
       );
     }
