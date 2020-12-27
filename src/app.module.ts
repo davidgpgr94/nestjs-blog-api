@@ -2,6 +2,8 @@ import { Module, ValidationPipe } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 
+import { AppController } from '@AppRoot/app.controller';
+
 import { PostsModule } from '@Posts/posts.module';
 import { DatabaseModule } from '@Common/database/database.module';
 import { LoggingInterceptor } from '@Common/interceptors/logging.interceptor';
@@ -22,7 +24,7 @@ import { UsersModule } from '@Users/users.module';
     AuthModule,
     UsersModule
   ],
-  controllers: [],
+  controllers: [AppController],
   providers: [
     {
       provide: APP_PIPE,
