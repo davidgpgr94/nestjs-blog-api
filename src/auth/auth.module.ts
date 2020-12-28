@@ -6,6 +6,7 @@ import { JwtModule } from '@nestjs/jwt';
 
 import { AuthService } from '@Auth/services/auth.service';
 import { LocalStrategy } from '@Auth/strategies/local.strategy';
+import { JwtStrategy } from '@Auth/strategies/jwt.strategy';
 import { JwtConstants } from '@Auth/constants';
 
 import { UsersModule } from '@Users/users.module';
@@ -31,7 +32,8 @@ import { Env } from '@Common/env-variables';
   providers: [
     BcryptService,
     AuthService,
-    LocalStrategy
+    LocalStrategy,
+    JwtStrategy
   ],
   exports: [AuthService]
 })
