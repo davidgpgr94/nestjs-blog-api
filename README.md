@@ -5,6 +5,9 @@
 - [x] Hacer las validaciones y usar los pipes para las validaciones.
 - [x] Terminar de hacer el controller de los posts
 - [ ] Hacer la parte de los usuarios (login, jwt, roles...)
+  - [x] Login
+  - [x] JWT
+  - [ ] Roles
 - [ ] Añadir Guard para que solo un usuario autenticado (con jwt) pueda crear un post.
 - [ ] Relacionar post con su author
 - [ ] Añadir Guard para que solo el autor o un admin pueda editar un post
@@ -15,7 +18,6 @@
 - [ ] Añadir Guard para que solo el autor o un admin pueda eliminar un comentario
 - [ ] Dar la opción de subir documentos/imagenes a un post
 ---
-
 
 ## Description
 
