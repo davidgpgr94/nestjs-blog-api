@@ -1,11 +1,13 @@
 
+import { User } from '@Users/entities/user.entity';
 import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  Index
+  Index,
+  ManyToOne
 } from 'typeorm';
 
 @Entity()
@@ -23,6 +25,16 @@ export class Post {
 
   @Column()
   text: string;
+
+  @ManyToOne(() => User,
+    {
+      eager: true,
+      nullable: true,
+      onDelete: 'SET NULL'
+    }
+  )
+  @Index({ unique: false })
+  author: User;
 
   @CreateDateColumn()
   createdAt?: Date;
