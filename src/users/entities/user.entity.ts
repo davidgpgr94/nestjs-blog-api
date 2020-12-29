@@ -10,6 +10,7 @@ import {
 import { Expose } from 'class-transformer';
 
 import { UserExposeGroups } from '@Users/enums/expose.enum';
+import { Role } from '@Users/enums/role.enum';
 
 @Entity()
 export class User {
@@ -32,6 +33,13 @@ export class User {
 
   @Column({ nullable: false })
   lastname: string;
+
+  @Column({
+    type: 'simple-enum',
+    enum: Role,
+    default: Role.User
+  })
+  role: Role;
 
   @CreateDateColumn()
   @Expose({
