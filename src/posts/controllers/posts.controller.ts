@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Logger, NotFoundException, Param, Patch, Post, Put } from '@nestjs/common';
+import { Body, Controller, Get, Logger, NotFoundException, Param, Post, Put, SerializeOptions, UseGuards } from '@nestjs/common';
 
 import { CreatePostDto } from '@Posts/dtos/create-post.dto';
 import { UpdatePostDto } from '@Posts/dtos/update-post.dto';
@@ -6,8 +6,12 @@ import { PostsService } from '@Posts/services/posts.service';
 import { Post as PostEntity } from '@Posts/entities/post.entity';
 import { PostEntity as PostEntityDecorator } from '@Posts/decorators/post-entity.decorator';
 
+import { JwtAuthGuard } from '@Auth/guards/jwt-auth.guard';
+import { Public } from '@Auth/decorators/public.decorator';
+
 
 @Controller('posts')
+@UseGuards(JwtAuthGuard)
 export class PostsController {
 
   private readonly logger: Logger;
@@ -17,11 +21,13 @@ export class PostsController {
   }
 
   @Get()
+  @Public(true)
   async findAll() {
     return await this.postsService.findAll();
   }
 
   @Get(':slug')
+  @Public(true)
   async findOne(@Param('slug') slug: string) {
     const post = await this.postsService.findBySlug(slug);
     if (!post) {

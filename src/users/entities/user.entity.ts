@@ -7,6 +7,9 @@ import {
   UpdateDateColumn,
   Index
 } from 'typeorm';
+import { Expose } from 'class-transformer';
+
+import { UserExposeGroups } from '@Users/enums/expose.enum';
 
 @Entity()
 export class User {
@@ -19,6 +22,9 @@ export class User {
   login: string;
 
   @Column({ nullable: false })
+  @Expose({
+    groups: [ UserExposeGroups.FULL ],
+  })
   hashedPassword: string;
 
   @Column({ nullable: false })
@@ -28,9 +34,15 @@ export class User {
   lastname: string;
 
   @CreateDateColumn()
+  @Expose({
+    groups: [ UserExposeGroups.FULL ]
+  })
   createdAt?: Date;
 
   @UpdateDateColumn()
+  @Expose({
+    groups: [ UserExposeGroups.FULL ]
+  })
   updatedAt?: Date;
 
 }
