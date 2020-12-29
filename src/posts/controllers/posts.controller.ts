@@ -7,8 +7,9 @@ import { Post as PostEntity } from '@Posts/entities/post.entity';
 import { PostEntity as PostEntityDecorator } from '@Posts/decorators/post-entity.decorator';
 
 import { JwtAuthGuard } from '@Auth/guards/jwt-auth.guard';
-import { Public } from '@Auth/decorators/public.decorator';
-
+import { Public } from '@Auth/decorators/public.decorator';
+import { ReqUser } from '@Auth/decorators/user.decorator';
+import { UserInRequestDto } from '@AppRoot/auth/dtos/user-in-request.dto';
 
 @Controller('posts')
 @UseGuards(JwtAuthGuard)
@@ -38,7 +39,8 @@ export class PostsController {
   }
 
   @Post()
-  async create(@Body() createPostDto: CreatePostDto) {
+  async create(@Body() createPostDto: CreatePostDto, @ReqUser() author: UserInRequestDto) {
+    createPostDto.author = author;
     return {slug: await this.postsService.create(createPostDto)};
   }
 
