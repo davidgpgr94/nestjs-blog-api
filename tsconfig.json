@@ -11,6 +11,10 @@
     "outDir": "./dist",
     "baseUrl": "./",
     "incremental": true,
+    "typeRoots": [
+      "@types",
+      "./node_modules/@types"
+    ],
     "paths": {
       "@AppRoot/*": ["src/*"],
       "@Common/*": ["src/common/*"],
