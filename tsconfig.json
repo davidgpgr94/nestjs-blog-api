@@ -16,7 +16,8 @@
       "@Common/*": ["src/common/*"],
       "@Posts/*": ["src/posts/*"],
       "@Auth/*": ["src/auth/*"],
-      "@Users/*": ["src/users/*"]
+      "@Users/*": ["src/users/*"],
+      "@Acl/*": ["src/casl/*"]
     }
   },
   "exclude": ["node_modules", "dist"]
