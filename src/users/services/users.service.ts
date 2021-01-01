@@ -5,8 +5,8 @@ import { CreateUserDto } from '@Users/dtos/create-user.dto';
 import { RegisterUserDto } from '@Users/dtos/register-user.dto';
 import { UserDto } from '@Users/dtos/user.dto';
 
-import { BcryptService } from '@Common/utils/bcrypt.service';
-import { DbErrorCodes, DbErrors } from '@Common/database/database-errors';
+import { BcryptService } from '@Common/utils/bcrypt.service';
+import { DbErrors } from '@Common/database/database-errors';
 
 @Injectable()
 export class UsersService {
@@ -33,8 +33,14 @@ export class UsersService {
     const hashedPassword = await this.bcryptService.hash(password);
     const dbInsertUserDto: RegisterUserDto = {...userData, hashedPassword};
     try {
-      const { hashedPassword, createdAt, updatedAt, ...userDto } = await this.userRepository.create(dbInsertUserDto);
-      return userDto;
+      const userCreated = await this.userRepository.create(dbInsertUserDto);
+      return {
+        id: userCreated.id,
+        firstname: userCreated.firstname,
+        lastname: userCreated.lastname,
+        login: userCreated.login,
+        role: userCreated.role
+      }
     } catch (err) {
       if (err?.code === DbErrors.UniqueViolation) {
         throw new BadRequestException('User with that login already exists');
