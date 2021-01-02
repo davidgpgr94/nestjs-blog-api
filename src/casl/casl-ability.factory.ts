@@ -25,13 +25,13 @@ export class CaslAbilityFactory {
       can(Action.MANAGE, 'all');
       can(Action.DELETE, Post);
     } else {
-      can(Action.READ, 'all');
+      can(Action.READ, Post);
+      can(Action.UPDATE, User, { id: user.id });
+      can(Action.READ, User, { id: user.id });
       cannot(Action.DELETE, Post);
     }
 
-    can(Action.UPDATE, Post, {
-      author: { id: user.id }
-    });
+    can(Action.UPDATE, Post, { 'author.id': user.id });
 
     return build();
   }
