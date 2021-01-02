@@ -2,11 +2,9 @@
 import { Request } from 'express';
 
 import { AppAbility } from '@Acl/casl-ability.factory';
-import { Action } from '@Auth/enums/action.enum';
+import { Action } from '@Acl/enums/action.enum';
+import { PolicyHandler } from '@Acl/policies/policy-handler.interface';
 
-import { PolicyHandler } from './policy-handler.interface';
-import { Post } from '@Posts/entities/post.entity';
-import { User } from '@AppRoot/users/entities/user.entity';
 
 export class EditPostPolicyHandler implements PolicyHandler {
 

@@ -9,9 +9,9 @@ import { PostEntity as PostEntityDecorator } from '@Posts/decorators/post-entit
 import { JwtAuthGuard } from '@Auth/guards/jwt-auth.guard';
 import { Public } from '@Auth/decorators/public.decorator';
 import { ReqUser } from '@Auth/decorators/user.decorator';
-import { PoliciesGuard } from '@Auth/guards/policies.guard';
-import { CheckPolicies } from '@Auth/decorators/check-policies.decorator';
-import { EditPostPolicyHandler } from '@Auth/policies/edit-post.policyhandler';
+import { PoliciesGuard } from '@Acl/guards/policies.guard';
+import { CheckPolicies, Policies } from '@Acl/decorators/check-policies.decorator';
+import { EditPostPolicyHandler } from '@Acl/policies/edit-post.policyhandler';
 import { User } from '@Users/entities/user.entity';
 
 @Controller('posts')
@@ -48,8 +48,7 @@ export class PostsController {
   }
 
   @Put(':slug')
-  @UseGuards(PoliciesGuard)
-  @CheckPolicies(EditPostPolicyHandler)
+  @Policies(EditPostPolicyHandler)
   async update(@Body() updatePostDto: UpdatePostDto, @PostEntityDecorator() postToUpdate: PostEntity) {
     return await this.postsService.update(postToUpdate, updatePostDto);
   }

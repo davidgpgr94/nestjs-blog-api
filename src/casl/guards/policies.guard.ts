@@ -3,8 +3,8 @@ import { CanActivate, ExecutionContext, Injectable, Type, UnauthorizedException 
 import { ModuleRef, Reflector } from '@nestjs/core';
 
 import { CaslAbilityFactory } from '@Acl/casl-ability.factory';
-import { CHECK_POLICIES_KEY } from '@Auth/decorators/check-policies.decorator';
-import { PolicyHandler } from '@Auth/policies/policy-handler.interface';
+import { CHECK_POLICIES_KEY } from '@Acl/decorators/check-policies.decorator';
+import { PolicyHandler } from '@Acl/policies/policy-handler.interface';
 
 import { Request } from 'express';
 

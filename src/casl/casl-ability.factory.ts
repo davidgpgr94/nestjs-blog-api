@@ -3,7 +3,7 @@ import { Ability, AbilityBuilder, AbilityClass } from '@casl/ability';
 import { Injectable } from '@nestjs/common';
 
 
-import { Action } from '@Auth/enums/action.enum';
+import { Action } from '@Acl/enums/action.enum';
 import { Post } from '@Posts/entities/post.entity';
 import { User } from '@Users/entities/user.entity';
 import { Role } from '@Users/enums/role.enum';
