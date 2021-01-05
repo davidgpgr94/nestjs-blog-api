@@ -1,42 +1,44 @@
 
-import { CanActivate, ExecutionContext, Injectable, Type, UnauthorizedException } from '@nestjs/common';
-import { ModuleRef, Reflector } from '@nestjs/core';
+import { Injectable, CanActivate, ExecutionContext, Type } from '@nestjs/common';
+import { ContextIdFactory, ModuleRef, Reflector } from '@nestjs/core';
+import { Request } from 'express';
 
 import { CaslAbilityFactory } from '@Acl/casl-ability.factory';
-import { CHECK_POLICIES_KEY } from '@Acl/decorators/check-policies.decorator';
 import { PolicyHandler } from '@Acl/policies/policy-handler.interface';
-
-import { Request } from 'express';
+import { CHECK_POLICIES_KEY } from '@Acl/constants';
 
 @Injectable()
 export class PoliciesGuard implements CanActivate {
 
   constructor(
-    private reflector: Reflector,
     private caslAbilityFactory: CaslAbilityFactory,
+    private reflector: Reflector,
     private moduleRef: ModuleRef
   ) {}
 
-  async canActivate(ctx: ExecutionContext): Promise<boolean> {
-    const policyHandlersRef = this.reflector.get<Type<PolicyHandler>[]>(
+  async canActivate(ctx: ExecutionContext) {
+    const policiesHandlersRef = this.reflector.get<Type<PolicyHandler>[]>(
       CHECK_POLICIES_KEY,
       ctx.getHandler()
-    ) || [];
+    ) || [];
+
+    if (policiesHandlersRef.length === 0) return true;
+
+    const contextId = ContextIdFactory.create();
+    this.moduleRef.registerRequestByContextId(ctx.switchToHttp().getRequest(), contextId);
 
     let policyHandlers: PolicyHandler[] = [];
-    for (let i = 0; i < policyHandlersRef.length; i++) {
-      const policyHandlerRef = policyHandlersRef[i];
-      const policyHandler = await this.moduleRef.create(policyHandlerRef);
+    for (let i = 0; i < policiesHandlersRef.length; i++) {
+      const policyHandlerRef = policiesHandlersRef[i];
+      const policyHandler = await this.moduleRef.resolve(policyHandlerRef, contextId, {strict: false});
       policyHandlers.push(policyHandler);
     }
 
-    const request = ctx.switchToHttp().getRequest<Request>();
-    const user = request.user;
-    const ability = this.caslAbilityFactory.createForUser(user);
+    const { user } = ctx.switchToHttp().getRequest<Request>();
+    if (!user) return false;
 
-    const allPoliciesOk = policyHandlers.every((handler) => handler.handle(ability, request));
-    if (!allPoliciesOk) throw new UnauthorizedException();
-    return allPoliciesOk;
+    const ability = this.caslAbilityFactory.createForUser(user);
+    return policyHandlers.every((handler) => handler.handle(ability));
   }
 
 }

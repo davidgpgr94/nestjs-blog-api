@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Logger, NotFoundException, Param, Post, Put, SerializeOptions, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Logger, NotFoundException, Param, Post, Put } from '@nestjs/common';
 
 import { CreatePostDto } from '@Posts/dtos/create-post.dto';
 import { UpdatePostDto } from '@Posts/dtos/update-post.dto';
@@ -9,13 +9,13 @@ import { PostEntity as PostEntityDecorator } from '@Posts/decorators/post-entit
 import { JwtAuthGuard } from '@Auth/guards/jwt-auth.guard';
 import { Public } from '@Auth/decorators/public.decorator';
 import { ReqUser } from '@Auth/decorators/user.decorator';
-import { PoliciesGuard } from '@Acl/guards/policies.guard';
-import { CheckPolicies, Policies } from '@Acl/decorators/check-policies.decorator';
-import { EditPostPolicyHandler } from '@Acl/policies/edit-post.policyhandler';
+import { CheckPolicies } from '@Acl/decorators/check-policies.decorator';
+import { Acl } from '@AppRoot/casl/decorators/acl.decorator';
 import { User } from '@Users/entities/user.entity';
+import { EditPostHandler } from '@AppRoot/casl/policies/edit-post-policy.handler';
 
 @Controller('posts')
-@UseGuards(JwtAuthGuard)
+@Acl(JwtAuthGuard)
 export class PostsController {
 
   private readonly logger: Logger;
@@ -48,7 +48,7 @@ export class PostsController {
   }
 
   @Put(':slug')
-  @Policies(EditPostPolicyHandler)
+  @CheckPolicies(EditPostHandler)
   async update(@Body() updatePostDto: UpdatePostDto, @PostEntityDecorator() postToUpdate: PostEntity) {
     return await this.postsService.update(postToUpdate, updatePostDto);
   }

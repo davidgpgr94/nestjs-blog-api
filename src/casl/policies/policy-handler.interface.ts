@@ -1,7 +1,6 @@
 
-import { AppAbility } from '@Acl/casl-ability.factory';
-import { Request } from 'express';
+import { AppAbility } from '@Acl/casl-ability.factory';
 
 export interface PolicyHandler {
-  handle(ability: AppAbility, request: Request): boolean;
+  handle(ability: AppAbility): boolean;
 }
