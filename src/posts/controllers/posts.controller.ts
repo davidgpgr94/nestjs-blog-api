@@ -7,7 +7,8 @@ import {
   Param,
   Post,
   Put,
-  Delete
+  Delete,
+  InternalServerErrorException
 } from '@nestjs/common';
 
 import { CreatePostDto } from '@Posts/dtos/create-post.dto';
@@ -69,10 +70,9 @@ export class PostsController {
   @Delete(':slug')
   @CheckPolicies(RemovePostHandler)
   async delete(@PostEntityDecorator() postToDelete: PostEntity) {
-    return {
-      action: 'removing',
-      postToDelete
-    }
+    const removed = await this.postsService.remove(postToDelete);
+    if (removed) return;
+    else throw new InternalServerErrorException();
   }
 
 }

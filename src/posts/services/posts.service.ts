@@ -33,6 +33,10 @@ export class PostsService {
     return this.postsRepository.updatePost(postToUpdate, updatePostDto);
   }
 
+  async remove(postToRemove: Post) {
+    return this.postsRepository.remove(postToRemove);
+  }
+
   // async createMany(posts: Post[]) {
   //   const queryRunner = this.connection.createQueryRunner();
 

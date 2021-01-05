@@ -37,4 +37,9 @@ export class PostRepository extends AbstractRepository<Post> {
       .getCount();
   }
 
+  async remove(postToRemove: Post) {
+    const postRemoved = await this.repository.remove(postToRemove)
+    return postRemoved !== undefined;
+  }
+
 }
