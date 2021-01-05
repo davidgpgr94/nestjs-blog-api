@@ -1,17 +1,17 @@
 import { Module } from '@nestjs/common';
 
 import { CaslAbilityFactory } from '@Acl/casl-ability.factory';
-import { EditPostPolicyProvider } from '@Acl/policies/edit-post-policy.provider';
-import { EditPostHandler } from './policies/edit-post-policy.handler';
+import { aclProviders } from '@Acl/providers'
+import { policies } from '@Acl/policies';
 
 @Module({
   providers: [
     CaslAbilityFactory,
-    EditPostPolicyProvider
+    ...aclProviders
   ],
   exports: [
     CaslAbilityFactory,
-    EditPostHandler
+    ...policies
   ]
 })
 export class CaslModule {}

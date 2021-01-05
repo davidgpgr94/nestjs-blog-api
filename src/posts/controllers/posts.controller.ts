@@ -9,10 +9,12 @@ import { PostEntity as PostEntityDecorator } from '@Posts/decorators/post-entit
 import { JwtAuthGuard } from '@Auth/guards/jwt-auth.guard';
 import { Public } from '@Auth/decorators/public.decorator';
 import { ReqUser } from '@Auth/decorators/user.decorator';
+
 import { CheckPolicies } from '@Acl/decorators/check-policies.decorator';
-import { Acl } from '@AppRoot/casl/decorators/acl.decorator';
+import { Acl } from '@Acl/decorators/acl.decorator';
+import { EditPostHandler } from '@Acl/policies/edit-post-policy.handler';
+
 import { User } from '@Users/entities/user.entity';
-import { EditPostHandler } from '@AppRoot/casl/policies/edit-post-policy.handler';
 
 @Controller('posts')
 @Acl(JwtAuthGuard)

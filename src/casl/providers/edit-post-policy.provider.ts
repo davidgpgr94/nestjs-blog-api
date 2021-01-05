@@ -3,7 +3,7 @@ import { Provider } from '@nestjs/common';
 import { REQUEST } from '@nestjs/core';
 import { Request } from 'express';
 
-import { EditPostHandler } from './edit-post-policy.handler';
+import { EditPostHandler } from '@Acl/policies/edit-post-policy.handler';
 
 export const EditPostPolicyProvider: Provider = {
   provide: EditPostHandler,
