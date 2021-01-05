@@ -12,7 +12,7 @@ import { ReqUser } from '@Auth/decorators/user.decorator';
 
 import { CheckPolicies } from '@Acl/decorators/check-policies.decorator';
 import { Acl } from '@Acl/decorators/acl.decorator';
-import { EditPostHandler } from '@Acl/policies/edit-post-policy.handler';
+import { EditPostHandler, CreatePostHandler } from '@Acl/policies';
 
 import { User } from '@Users/entities/user.entity';
 
@@ -44,6 +44,7 @@ export class PostsController {
   }
 
   @Post()
+  @CheckPolicies(CreatePostHandler)
   async create(@Body() createPostDto: CreatePostDto, @ReqUser() author: User) {
     createPostDto.author = author;
     return {slug: await this.postsService.create(createPostDto)};

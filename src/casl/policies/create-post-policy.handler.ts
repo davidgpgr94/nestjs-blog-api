@@ -6,13 +6,10 @@ import { Action } from '@Acl/enums/action.enum';
 
 import { PolicyHandler } from './policy-handler.interface';
 
-export class EditPostHandler implements PolicyHandler {
-
-  constructor(private post: Post) {}
+export class CreatePostHandler implements PolicyHandler {
 
   handle(ability: AppAbility): boolean {
-    if (!this.post) return false;
-    return ability.can(Action.UPDATE, this.post);
+    return ability.can(Action.CREATE, Post);
   }
 
 }

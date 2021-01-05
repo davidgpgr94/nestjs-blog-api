@@ -1,5 +1,5 @@
 
-import { Injectable, CanActivate, ExecutionContext, Type } from '@nestjs/common';
+import { Injectable, CanActivate, ExecutionContext, Type, Scope } from '@nestjs/common';
 import { ContextIdFactory, ModuleRef, Reflector } from '@nestjs/core';
 import { Request } from 'express';
 
@@ -30,7 +30,13 @@ export class PoliciesGuard implements CanActivate {
     let policyHandlers: PolicyHandler[] = [];
     for (let i = 0; i < policiesHandlersRef.length; i++) {
       const policyHandlerRef = policiesHandlersRef[i];
-      const policyHandler = await this.moduleRef.resolve(policyHandlerRef, contextId, {strict: false});
+      const policyScope = this.moduleRef.introspect(policyHandlerRef).scope;
+      let policyHandler: PolicyHandler;
+      if (policyScope === Scope.DEFAULT) {
+        policyHandler = this.moduleRef.get(policyHandlerRef, { strict: false });
+      } else {
+        policyHandler = await this.moduleRef.resolve(policyHandlerRef, contextId, {strict: false});
+      }
       policyHandlers.push(policyHandler);
     }
 
