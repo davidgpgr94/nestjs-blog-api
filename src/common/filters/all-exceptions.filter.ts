@@ -43,6 +43,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
 
     if (nodeEnv === NodeEnvValues.dev) {
       this.logger.error(exception.toString());
+      console.error(exception);
     }
 
     res.status(response.statusCode).json(response);
