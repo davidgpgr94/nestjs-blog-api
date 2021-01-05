@@ -1,4 +1,14 @@
-import { Body, Controller, Get, Logger, NotFoundException, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Logger,
+  NotFoundException,
+  Param,
+  Post,
+  Put,
+  Delete
+} from '@nestjs/common';
 
 import { CreatePostDto } from '@Posts/dtos/create-post.dto';
 import { UpdatePostDto } from '@Posts/dtos/update-post.dto';
@@ -12,7 +22,7 @@ import { ReqUser } from '@Auth/decorators/user.decorator';
 
 import { CheckPolicies } from '@Acl/decorators/check-policies.decorator';
 import { Acl } from '@Acl/decorators/acl.decorator';
-import { EditPostHandler, CreatePostHandler } from '@Acl/policies';
+import { EditPostHandler, CreatePostHandler, RemovePostHandler } from '@Acl/policies';
 
 import { User } from '@Users/entities/user.entity';
 
@@ -54,6 +64,15 @@ export class PostsController {
   @CheckPolicies(EditPostHandler)
   async update(@Body() updatePostDto: UpdatePostDto, @PostEntityDecorator() postToUpdate: PostEntity) {
     return await this.postsService.update(postToUpdate, updatePostDto);
+  }
+
+  @Delete(':slug')
+  @CheckPolicies(RemovePostHandler)
+  async delete(@PostEntityDecorator() postToDelete: PostEntity) {
+    return {
+      action: 'removing',
+      postToDelete
+    }
   }
 
 }

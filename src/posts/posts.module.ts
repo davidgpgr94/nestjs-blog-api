@@ -30,6 +30,7 @@ export class PostsModule implements NestModule {
       .apply(RetrievePostBySlugMiddleware)
       .forRoutes(
         { path: 'posts/:slug', method: RequestMethod.PUT },
+        { path: 'posts/:slug', method: RequestMethod.DELETE },
       )
   }
 }
