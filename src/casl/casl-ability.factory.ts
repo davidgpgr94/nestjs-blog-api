@@ -1,7 +1,8 @@
 
-import { Ability, AbilityBuilder, AbilityClass } from '@casl/ability';
+import { Ability, AbilityBuilder, AbilityClass, ExtractSubjectType } from '@casl/ability';
 import { Injectable } from '@nestjs/common';
 
+import { FlatPost } from '@Acl/types';
 
 import { Action } from '@Acl/enums/action.enum';
 import { Post } from '@Posts/entities/post.entity';
@@ -32,9 +33,11 @@ export class CaslAbilityFactory {
       cannot(Action.DELETE, Post);
     }
 
-    can(Action.UPDATE, Post, { 'author.id': user.id });
+    can<FlatPost>(Action.UPDATE, Post, { 'author.id': user.id });
 
-    return build();
+    return build({
+      detectSubjectType: type => type.constructor as ExtractSubjectType<Subjects>
+    });
   }
 
 }
