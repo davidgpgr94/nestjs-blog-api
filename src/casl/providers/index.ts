@@ -1,12 +1,10 @@
 
 import { Provider } from '@nestjs/common';
 
-import { EditPostPolicyProvider } from './edit-post-policy.provider';
-import { CreatePostPolicyProvider } from './create-post-policy.provider';
-import { RemovePostPolicyProvider } from './remove-post-policy.provider';
+import { postPolicyProviders } from './posts';
+import { userPolicyProviders } from './users';
 
 export const aclProviders: Provider[] = [
-  EditPostPolicyProvider,
-  CreatePostPolicyProvider,
-  RemovePostPolicyProvider
+  ...postPolicyProviders,
+  ...userPolicyProviders
 ]
