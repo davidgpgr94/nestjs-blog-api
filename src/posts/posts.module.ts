@@ -8,14 +8,12 @@ import { PostsService } from '@Posts/services/posts.service';
 import { PostRepository } from '@Posts/repositories/post.repository';
 import { PostSubscriber } from '@Posts/subscribers/post.subscriber';
 import { RetrievePostBySlugMiddleware } from '@Posts/middlewares/retrieve-post-by-slug.middleware';
-import { CaslModule } from '@Acl/casl.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([
       PostRepository
-    ]),
-    CaslModule
+    ])
   ],
   controllers: [PostsController],
   providers: [
