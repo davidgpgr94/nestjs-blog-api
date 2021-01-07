@@ -29,6 +29,7 @@ export class CaslAbilityFactory {
       can(Action.READ, Post);
       can(Action.UPDATE, User, { id: user.id });
       can(Action.READ, User, { id: user.id });
+      can(Action.READ, User, { login: user.login });
       can(Action.CREATE, Post);
       cannot(Action.DELETE, Post);
     }
