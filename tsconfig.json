@@ -21,6 +21,7 @@
       "@Posts/*": ["src/posts/*"],
       "@Auth/*": ["src/auth/*"],
       "@Users/*": ["src/users/*"],
+      "@Comments/*": ["src/comments/*"],
       "@Acl/*": ["src/casl/*"]
     }
   },

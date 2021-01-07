@@ -1,5 +1,6 @@
 
 import { User } from '@Users/entities/user.entity';
+import { Comment } from '@Comments/entities/comment.entity';
 import {
   Entity,
   Column,
@@ -7,7 +8,8 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   Index,
-  ManyToOne
+  ManyToOne,
+  OneToMany
 } from 'typeorm';
 
 @Entity()
@@ -35,6 +37,9 @@ export class Post {
   )
   @Index({ unique: false })
   author: User;
+
+  @OneToMany(() => Comment, comment => comment.post, { eager: true })
+  comments: Comment[];
 
   @CreateDateColumn()
   createdAt?: Date;

@@ -12,6 +12,7 @@ import { AllExceptionsFilter } from '@Common/filters/all-exceptions.filter';
 import { AuthModule } from '@Auth/auth.module';
 import { UsersModule } from '@Users/users.module';
 import { CaslModule } from '@Acl/casl.module';
+import { CommentsModule } from './comments/comments.module';
 
 @Module({
   imports: [
@@ -24,7 +25,8 @@ import { CaslModule } from '@Acl/casl.module';
     PostsModule,
     AuthModule,
     UsersModule,
-    CaslModule
+    CaslModule,
+    CommentsModule
   ],
   controllers: [AppController],
   providers: [
