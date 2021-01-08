@@ -11,6 +11,9 @@ import {
   ManyToOne,
   OneToMany
 } from 'typeorm';
+import { Expose } from 'class-transformer';
+
+import { PostExposeGroups } from '@Posts/enums/expose.enum';
 
 @Entity()
 export class Post {
@@ -39,6 +42,9 @@ export class Post {
   author: User;
 
   @OneToMany(() => Comment, comment => comment.post, { eager: true })
+  @Expose({
+    groups: [ PostExposeGroups.FULL, PostExposeGroups.WITH_COMMENTS ]
+  })
   comments: Comment[];
 
   @CreateDateColumn()

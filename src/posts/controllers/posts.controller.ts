@@ -8,7 +8,8 @@ import {
   Post,
   Put,
   Delete,
-  InternalServerErrorException
+  InternalServerErrorException,
+  SerializeOptions
 } from '@nestjs/common';
 
 import { CreatePostDto } from '@Posts/dtos/create-post.dto';
@@ -16,6 +17,7 @@ import { UpdatePostDto } from '@Posts/dtos/update-post.dto';
 import { PostsService } from '@Posts/services/posts.service';
 import { Post as PostEntity } from '@Posts/entities/post.entity';
 import { PostEntity as PostEntityDecorator } from '@Posts/decorators/post-entity.decorator';
+import { PostExposeGroups } from '@Posts/enums/expose.enum';
 
 import { JwtAuthGuard } from '@Auth/guards/jwt-auth.guard';
 import { Public } from '@Auth/decorators/public.decorator';
@@ -45,6 +47,9 @@ export class PostsController {
 
   @Get(':slug')
   @Public(true)
+  @SerializeOptions({
+    groups: [ PostExposeGroups.FULL ]
+  })
   async findOne(@Param('slug') slug: string) {
     const post = await this.postsService.findBySlug(slug);
     if (!post) {

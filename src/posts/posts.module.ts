@@ -20,7 +20,8 @@ import { RetrievePostBySlugMiddleware } from '@Posts/middlewares/retrieve-post-b
     PostsService,
     PostSubscriber,
     SlugService
-  ]
+  ],
+  exports: [ PostsService ]
 })
 export class PostsModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

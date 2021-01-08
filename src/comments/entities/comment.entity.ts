@@ -8,9 +8,12 @@ import {
   ManyToOne,
   Index
 } from 'typeorm';
+import { Expose } from 'class-transformer';
 
 import { Post } from '@Posts/entities/post.entity';
 import { User } from '@Users/entities/user.entity';
+
+import { CommentExposeGroups } from '@Comments/enums/expose.enum';
 
 @Entity()
 export class Comment {
@@ -28,6 +31,12 @@ export class Comment {
   @Index()
   author: User;
 
+  @Expose({
+    groups: [
+      CommentExposeGroups.FULL,
+      CommentExposeGroups.WITH_POST
+    ]
+  })
   @ManyToOne(() => Post,
     {
       eager: false,
