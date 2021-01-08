@@ -4,17 +4,17 @@
 
 - [x] Hacer las validaciones y usar los pipes para las validaciones.
 - [x] Terminar de hacer el controller de los posts
-- [ ] Hacer la parte de los usuarios (login, jwt, roles...)
+- [x] Hacer la parte de los usuarios (login, jwt, roles...)
   - [x] Login
   - [x] JWT
-  - [ ] Roles
-- [ ] Añadir Guard para que solo un usuario autenticado (con jwt) pueda crear un post.
-- [ ] Relacionar post con su author
-- [ ] Añadir Guard para que solo el autor o un admin pueda editar un post
+  - [x] Roles
+- [x] Añadir Guard para que solo un usuario autenticado (con jwt) pueda crear un post.
+- [x] Relacionar post con su author
+- [x] Añadir Guard para que solo el autor o un admin pueda editar un post
 - [ ] Añadir un modulo de admin para gestionar los usuarios (controlador para añadir nuevos admins)
-- [ ] Crear submodulo Comentarios dentro de los posts.
-- [ ] Relacionar los comentarios con los posts
-- [ ] Añadir Guard para que solo un usuario autenticado (con jwt) pueda crear un comentario
+- [x] Crear submodulo Comentarios dentro de los posts.
+- [x] Relacionar los comentarios con los posts
+- [x] Añadir Guard para que solo un usuario autenticado (con jwt) pueda crear un comentario
 - [ ] Añadir Guard para que solo el autor o un admin pueda eliminar un comentario
 - [ ] Dar la opción de subir documentos/imagenes a un post
 ---
