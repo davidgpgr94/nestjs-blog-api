@@ -1,6 +1,4 @@
 
-import { User } from '@Users/entities/user.entity';
-import { Comment } from '@Comments/entities/comment.entity';
 import {
   Entity,
   Column,
@@ -13,7 +11,10 @@ import {
 } from 'typeorm';
 import { Expose } from 'class-transformer';
 
-import { PostExposeGroups } from '@Posts/enums/expose.enum';
+import { User } from '@Users/entities/user.entity';
+import { Comment } from '@Comments/entities/comment.entity';
+import { PostExposeGroups } from '@Posts/enums/post-expose-groups.enum';
+import { AttachedFile } from './attached-file.entity';
 
 @Entity()
 export class Post {
@@ -46,6 +47,12 @@ export class Post {
     groups: [ PostExposeGroups.FULL, PostExposeGroups.WITH_COMMENTS ]
   })
   comments: Comment[];
+
+  @OneToMany(() => AttachedFile, file => file.post, { eager: true })
+  @Expose({
+    groups: [ PostExposeGroups.FULL, PostExposeGroups.WITH_FILES ]
+  })
+  files: AttachedFile[];
 
   @CreateDateColumn()
   createdAt?: Date;
