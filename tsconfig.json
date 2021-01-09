@@ -11,12 +11,18 @@
     "outDir": "./dist",
     "baseUrl": "./",
     "incremental": true,
+    "typeRoots": [
+      "@types",
+      "./node_modules/@types"
+    ],
     "paths": {
       "@AppRoot/*": ["src/*"],
       "@Common/*": ["src/common/*"],
       "@Posts/*": ["src/posts/*"],
       "@Auth/*": ["src/auth/*"],
-      "@Users/*": ["src/users/*"]
+      "@Users/*": ["src/users/*"],
+      "@Comments/*": ["src/comments/*"],
+      "@Acl/*": ["src/casl/*"]
     }
   },
   "exclude": ["node_modules", "dist"]

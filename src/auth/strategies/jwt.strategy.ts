@@ -4,12 +4,12 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
-import { Env } from '@AppRoot/common/env-variables';
+import { Env } from '@Common/env-variables';
+import { User } from '@Users/entities/user.entity';
 
 import { JwtConstants } from '@Auth/constants';
 import { JwtPayload } from '@Auth/dtos/jwt-payload.dto';
 import { AuthService } from '@Auth/services/auth.service';
-import { UserInRequestDto } from '@Auth/dtos/user-in-request.dto';
 
 interface FullJwtPayload extends JwtPayload {
   iat: number;
@@ -29,7 +29,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(fullPayload: FullJwtPayload): Promise<UserInRequestDto> {
+  async validate(fullPayload: FullJwtPayload): Promise<User> {
     const { exp, iat, ...payload } = fullPayload;
     const user = await this.authService.retrieveUserFromJwt(payload);
     if (!user) {

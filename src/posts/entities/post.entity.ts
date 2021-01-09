@@ -1,5 +1,4 @@
 
-import { User } from '@Users/entities/user.entity';
 import {
   Entity,
   Column,
@@ -7,8 +6,15 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   Index,
-  ManyToOne
+  ManyToOne,
+  OneToMany
 } from 'typeorm';
+import { Expose } from 'class-transformer';
+
+import { User } from '@Users/entities/user.entity';
+import { Comment } from '@Comments/entities/comment.entity';
+import { PostExposeGroups } from '@Posts/enums/post-expose-groups.enum';
+import { AttachedFile } from './attached-file.entity';
 
 @Entity()
 export class Post {
@@ -35,6 +41,18 @@ export class Post {
   )
   @Index({ unique: false })
   author: User;
+
+  @OneToMany(() => Comment, comment => comment.post, { eager: true })
+  @Expose({
+    groups: [ PostExposeGroups.FULL, PostExposeGroups.WITH_COMMENTS ]
+  })
+  comments: Comment[];
+
+  @OneToMany(() => AttachedFile, file => file.post, { eager: true })
+  @Expose({
+    groups: [ PostExposeGroups.FULL, PostExposeGroups.WITH_FILES ]
+  })
+  files: AttachedFile[];
 
   @CreateDateColumn()
   createdAt?: Date;

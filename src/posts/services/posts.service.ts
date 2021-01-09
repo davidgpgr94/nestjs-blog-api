@@ -4,7 +4,9 @@ import { Injectable } from '@nestjs/common';
 import { CreatePostDto } from '@Posts/dtos/create-post.dto';
 import { Post } from '@Posts/entities/post.entity';
 import { PostRepository } from '@Posts/repositories/post.repository';
-import { UpdatePostDto } from '../dtos/update-post.dto';
+import { UpdatePostDto } from '@Posts/dtos/update-post.dto';
+
+import { AttachedFilesService } from './attached-files.service';
 
 @Injectable()
 export class PostsService {
@@ -15,7 +17,10 @@ export class PostsService {
   //   private connection: Connection
   // ) {}
 
-  constructor(private postsRepository: PostRepository) {}
+  constructor(
+    private postsRepository: PostRepository,
+    private attachedFilesService: AttachedFilesService
+  ) {}
 
   async findAll(): Promise<Post[]> {
     return await this.postsRepository.findAll();
@@ -26,11 +31,17 @@ export class PostsService {
   }
 
   async create(createPostDto: CreatePostDto) {
-    return this.postsRepository.createPost(createPostDto);
+    const postCreated = await this.postsRepository.createPost(createPostDto);
+    await this.attachedFilesService.attachFilesToPost(createPostDto.files, postCreated);
+    return await this.postsRepository.findOne(postCreated.id);
   }
 
   async update(postToUpdate: Post, updatePostDto: UpdatePostDto) {
     return this.postsRepository.updatePost(postToUpdate, updatePostDto);
+  }
+
+  async remove(postToRemove: Post) {
+    return this.postsRepository.remove(postToRemove);
   }
 
   // async createMany(posts: Post[]) {

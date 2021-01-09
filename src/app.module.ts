@@ -11,6 +11,8 @@ import { TransformResponseInterceptor } from '@Common/interceptors/transform-res
 import { AllExceptionsFilter } from '@Common/filters/all-exceptions.filter';
 import { AuthModule } from '@Auth/auth.module';
 import { UsersModule } from '@Users/users.module';
+import { CaslModule } from '@Acl/casl.module';
+import { CommentsModule } from '@Comments/comments.module';
 
 @Module({
   imports: [
@@ -22,7 +24,9 @@ import { UsersModule } from '@Users/users.module';
     DatabaseModule,
     PostsModule,
     AuthModule,
-    UsersModule
+    UsersModule,
+    CaslModule,
+    CommentsModule
   ],
   controllers: [AppController],
   providers: [
