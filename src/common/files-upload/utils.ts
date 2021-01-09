@@ -9,7 +9,6 @@ export function destPath(rootFolder: string) {
   const day = `${today.getDate()}`;
   const finalDest = path.join(rootFolder, year, month, day);
   fs.mkdirSync(finalDest, { recursive: true });
-  console.log({finalDest})
   return finalDest;
 }
 

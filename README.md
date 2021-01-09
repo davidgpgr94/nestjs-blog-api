@@ -16,7 +16,7 @@
 - [x] Relacionar los comentarios con los posts
 - [x] Añadir Guard para que solo un usuario autenticado (con jwt) pueda crear un comentario
 - [ ] Añadir Guard para que solo el autor o un admin pueda eliminar un comentario
-- [ ] Dar la opción de subir documentos/imagenes a un post
+- [x] Dar la opción de subir documentos/imagenes a un post
 ---
 
 ## Description

@@ -7,7 +7,7 @@ import { UpdatePostDto } from "../dtos/update-post.dto";
 @EntityRepository(Post)
 export class PostRepository extends AbstractRepository<Post> {
 
-  async findOne(id: string) {
+  async findOne(id: number) {
     const result = await this.repository.findOne(id);
     return result;
   }
@@ -23,7 +23,7 @@ export class PostRepository extends AbstractRepository<Post> {
   async createPost(createPostDto: CreatePostDto) {
     const post = this.repository.create(createPostDto);
     const postCreated = await this.repository.save(post);
-    return postCreated.slug;
+    return postCreated;
   }
 
   async updatePost(postToUpdate: Post, updatePostDto: UpdatePostDto) {

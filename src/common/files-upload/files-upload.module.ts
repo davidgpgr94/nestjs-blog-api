@@ -29,7 +29,6 @@ import { destPath, finalFilename } from './utils';
               next(null, finalDest);
             },
             filename: (req, file, next) => {
-              console.log({file});
               const filename: string = finalFilename(file.originalname);
               next(null, filename);
             }

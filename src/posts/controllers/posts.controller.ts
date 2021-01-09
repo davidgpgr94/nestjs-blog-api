@@ -9,15 +9,20 @@ import {
   Put,
   Delete,
   InternalServerErrorException,
-  SerializeOptions
+  SerializeOptions,
+  UseInterceptors
 } from '@nestjs/common';
+import { FilesInterceptor } from '@nestjs/platform-express';
+
 
 import { CreatePostDto } from '@Posts/dtos/create-post.dto';
 import { UpdatePostDto } from '@Posts/dtos/update-post.dto';
 import { PostsService } from '@Posts/services/posts.service';
 import { Post as PostEntity } from '@Posts/entities/post.entity';
 import { PostEntity as PostEntityDecorator } from '@Posts/decorators/post-entity.decorator';
-import { PostExposeGroups } from '@Posts/enums/expose.enum';
+import { FilesUploaded } from '@Posts/decorators/files-uploaded.decorator';
+import { PostExposeGroups } from '@Posts/enums/post-expose-groups.enum';
+import { AttachedFileDto } from '@Posts/dtos/attached-file.dto';
 
 import { JwtAuthGuard } from '@Auth/guards/jwt-auth.guard';
 import { Public } from '@Auth/decorators/public.decorator';
@@ -61,9 +66,15 @@ export class PostsController {
 
   @Post()
   @CheckPolicies(CreatePostHandler)
-  async create(@Body() createPostDto: CreatePostDto, @ReqUser() author: User) {
+  @UseInterceptors(FilesInterceptor('files'))
+  @SerializeOptions({
+    groups: [ PostExposeGroups.FULL ]
+  })
+  async create(@Body() createPostDto: CreatePostDto, @ReqUser() author: User, @FilesUploaded(AttachedFileDto) files: AttachedFileDto[]) {
     createPostDto.author = author;
-    return {slug: await this.postsService.create(createPostDto)};
+    createPostDto.files = files;
+    const postCreated = await this.postsService.create(createPostDto);
+    return postCreated;
   }
 
   @Put(':slug')
