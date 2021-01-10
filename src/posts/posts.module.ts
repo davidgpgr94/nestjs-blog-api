@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { SlugService } from '@Common/utils/slug.service';
 import { PostsController } from '@Posts/controllers/posts.controller';
+import { AttachedFilesController } from '@Posts/controllers/attached-files/attached-files.controller';
 import { PostsService } from '@Posts/services/posts.service';
 import { PostRepository } from '@Posts/repositories/post.repository';
 import { AttachedFileRepository } from '@Posts/repositories/attached-file.repository';
@@ -20,7 +21,7 @@ import { AttachedFilesService } from '@Posts/services/attached-files.service';
     ]),
     FilesUploadModule
   ],
-  controllers: [PostsController],
+  controllers: [PostsController, AttachedFilesController],
   providers: [
     PostsService,
     PostSubscriber,
@@ -36,6 +37,7 @@ export class PostsModule implements NestModule {
       .forRoutes(
         { path: 'posts/:slug', method: RequestMethod.PUT },
         { path: 'posts/:slug', method: RequestMethod.DELETE },
+        AttachedFilesController
       )
   }
 }

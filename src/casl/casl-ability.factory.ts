@@ -2,14 +2,15 @@
 import { Ability, AbilityBuilder, AbilityClass, ExtractSubjectType } from '@casl/ability';
 import { Injectable } from '@nestjs/common';
 
-import { FlatPost } from '@Acl/types';
+import { FlatPost, FlatAttachedFile } from '@Acl/types';
 
 import { Action } from '@Acl/enums/action.enum';
 import { Post } from '@Posts/entities/post.entity';
+import { AttachedFile } from '@Posts/entities/attached-file.entity';
 import { User } from '@Users/entities/user.entity';
 import { Role } from '@Users/enums/role.enum';
 
-type Subjects = typeof Post | typeof User | Post | User | 'all';
+type Subjects = typeof Post | typeof User | typeof AttachedFile | Post | User | AttachedFile | 'all';
 
 export type AppAbility = Ability<[Action, Subjects]>;
 
@@ -32,6 +33,8 @@ export class CaslAbilityFactory {
       can(Action.READ, User, { login: user.login });
       can(Action.CREATE, Post);
       cannot(Action.DELETE, Post);
+
+      can<FlatAttachedFile>(Action.DELETE, AttachedFile, { 'post.author.id': user.id });
     }
 
     can<FlatPost>(Action.UPDATE, Post, { 'author.id': user.id });
